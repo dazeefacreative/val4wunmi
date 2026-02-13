@@ -43,11 +43,26 @@ export default function Page() {
     }, 1500);
   };
 
+  const handleYesClick = async () => {
+    setYesPressed(true);
+
+    const formData = new FormData();
+    formData.append("form-name", "valentine-yes");
+    formData.append("response", "She said YES ❤️");
+
+    await fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formData).toString(),
+    });
+  };
+
   const handleNoClick = () => setNoCount(noCount + 1);
 
   const getNoButtonText = () => {
     const phrases = [
       "No",
+      "For real?",
       "Are you sure?",
       "Really sure?",
       "Think again!",
@@ -115,7 +130,7 @@ export default function Page() {
           <div className="flex flex-wrap justify-center gap-2 items-center">
             <button
               className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg mr-4"
-              onClick={() => setYesPressed(true)}
+              onClick={handleYesClick}
             >
               Yes
             </button>
@@ -125,6 +140,11 @@ export default function Page() {
             >
               {getNoButtonText()}
             </button>
+            <form name="valentine-yes" method="POST" data-netlify="true" hidden>
+              <input type="hidden" name="form-name" value="valentine-yes" />
+              <input type="text" name="response" />
+            </form>
+
           </div>
         </>
       )}
