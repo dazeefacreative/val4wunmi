@@ -49,6 +49,7 @@ export default function Page() {
     const formData = new FormData();
     formData.append("form-name", "valentine-yes");
     formData.append("response", "She said YES ❤️");
+    formData.append("timestamp", new Date().toLocaleString());
 
     await fetch("/", {
       method: "POST",
